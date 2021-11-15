@@ -1,0 +1,8 @@
+### show all users
+GET http://localhost:3022
+content-type: application/json
+
+### delete a user
+DELETE http://localhost:3022/deleteuser/user123
+content-type: application/json
+
