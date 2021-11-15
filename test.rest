@@ -8,3 +8,22 @@ content-type: application/json
 DELETE {{url}}/deleteuser/6192323ae5ad5411032013c3
 content-type: application/json
 
+### add a user
+POST {{url}}/adduser
+content-type: application/json
+
+{
+	"user": {
+		"name": "Jim Smith",
+		"username": "jim_smith",
+		"email": "js@gmail.com"
+	}
+}
+
+### udpate a user
+PATCH {{url}}/edituser/6192323ae5ad5411032013c2
+content-type: application/json
+
+{
+	"email": "bk2@yahoo.com"
+}

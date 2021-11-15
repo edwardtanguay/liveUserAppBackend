@@ -6,6 +6,8 @@ const port = 3022;
 const mongoConnectionString = 'mongodb://localhost:27017';
 const client = new MongoClient(mongoConnectionString);
 
+app.use(express.json());
+
 const execMongo = async (done) => {
 	await client.connect();
 	const db = client.db('api002');
@@ -19,12 +21,11 @@ app.get('/', (req, res) => {
 				name: 1,
 				username: 1,
 				email: 1
-			})	
+			})
 			.toArray();
 		res.json(users);
 	});
 });
-
 
 app.delete('/deleteuser/:id', (req, res) => {
 	const id = req.params.id;
@@ -32,6 +33,28 @@ app.delete('/deleteuser/:id', (req, res) => {
 		const deleteResult = await db.collection('users100').deleteOne({ _id: new mongodb.ObjectId(id) });
 		res.json({
 			result: deleteResult
+		})
+	});
+});
+
+app.post('/adduser', (req, res) => {
+	const user = req.body.user;
+	execMongo(async (db) => {
+		const insertResult = await db.collection('users100').insertOne(user);
+		res.json({
+			result: insertResult
+		});
+	});
+});
+
+app.patch('/edituser/:id', (req, res) => {
+	const id = req.params.id;
+	const email = req.body.email;
+	console.log(email);
+	execMongo(async (db) => {
+		const updateResult = await db.collection('users100').updateOne({ _id: new mongodb.ObjectId(id) }, { $set: { email } });
+		res.json({
+			result: updateResult
 		})
 	});
 });
