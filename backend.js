@@ -1,5 +1,6 @@
 import express from 'express';
 import mongodb, { MongoClient } from 'mongodb';
+import cors from 'cors';
 
 const app = express();
 const port = 3022;
@@ -7,6 +8,7 @@ const mongoConnectionString = 'mongodb://localhost:27017';
 const client = new MongoClient(mongoConnectionString);
 
 app.use(express.json());
+app.use(cors());
 
 const execMongo = async (done) => {
 	await client.connect();
